@@ -1,0 +1,32 @@
+{
+  "name": "demo",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --delay 10ms --watch ../../dist/*.js -x 'cross-env DEBUG=vite-plugin-swagger2ts:* vite'",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vueuse/shared": "^10.9.0",
+    "lodash": "^4.17.21",
+    "qs": "^6.11.2",
+    "vue": "^3.4.19"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.6.4",
+    "@types/lodash": "^4.14.202",
+    "@types/qs": "^6.9.12",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.56.0",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.2.2",
+    "unocss": "^0.58.5",
+    "vite": "^5.1.4",
+    "vite-plugin-apits2mock": "workspace:*",
+    "vite-plugin-restart": "^0.4.0",
+    "vue-tsc": "^1.8.27"
+  }
+}
