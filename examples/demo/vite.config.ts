@@ -8,7 +8,15 @@ export default defineConfig({
   plugins: [
     vue(),
     Unocss(),
-    TS2Mock({ dir: 'src/request/interfaces', prefix: '/api' }),
+    TS2Mock({
+      dir: 'src/request/interfaces',
+      prefix: '/api',
+      wrapper: {
+        error_code: '@integer(10,200)',
+        reason: '@string',
+        result: '@Interface',
+      },
+    }),
   ],
   resolve: {
     alias: { '@/': '/src/' },

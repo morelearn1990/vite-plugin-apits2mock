@@ -16,23 +16,19 @@ export default interface JuHeAPI {
         }
       }
       response: {
-        error_code: number
-        reason: string
-        result: {
-          page: number
-          pageSize: number
-          stat: string
-          data: {
-            uniquekey: string
-            title: string
-            date: string
-            category: string
-            author_name: string
-            url: string
-            thumbnail_pic_s: string
-            is_content: string
-          }[]
-        }
+        page: number
+        pageSize: number
+        stat: string
+        data: {
+          uniquekey: string
+          title: string
+          date: string
+          category: string
+          author_name: string
+          url: string
+          thumbnail_pic_s: string
+          is_content: string
+        }[]
       }
     }
   }
@@ -45,17 +41,12 @@ export default interface JuHeAPI {
         }
       }
       response: {
-        error_code: number
-        reason: string
-        result: {
-
-          province: string
-          city: string
-          areacode: string
-          zip: string
-          company: string
-          card: string
-        }
+        province: string
+        city: string
+        areacode: string
+        zip: string
+        company: string
+        card: string
       }
     }
   }
