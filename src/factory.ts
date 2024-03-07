@@ -51,11 +51,11 @@ export default function createSchemaFactory(wrapper?: Record<string, any>) {
         continue
 
       let template = schema2MockTemp({ rootSchema: api.root, schema: api.response?.definition })
-      if (/~debug/.test(api.definition.description ?? ''))
-        console.log(`===============>\nrequest: ${api.key.replace('__', ' ')} \ntemplate:  `, JSON.stringify(template, null, 1))
-
       if (wrapperInjectProps && wrapper)
         template = mergeWrapper(wrapper, wrapperInjectProps, template)
+
+      if (/~debug/.test(api.definition.description ?? ''))
+        console.log(`===============>\nrequest: ${api.key.replace('__', ' ')} \ntemplate:  `, JSON.stringify(template, null, 1))
 
       cachedAPIs.set(api.key, { ...api, mockTemplate: template })
     }
