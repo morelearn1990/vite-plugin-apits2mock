@@ -8,7 +8,6 @@ import { pathToGlob } from './files'
 export function resolveOptionsSingle(userOptions: UserSingleOptions): ResolvedSingleOptions {
   const {
     dir = './mock',
-    delay = [0, 300],
     prefix = '',
     wrapper,
   } = userOptions
@@ -18,7 +17,7 @@ export function resolveOptionsSingle(userOptions: UserSingleOptions): ResolvedSi
 
   const negativeRe = micromatch.makeRe(pathToGlob(dir, root))
 
-  return { root, dir, delay, prefix, negativeRe, wrapper }
+  return { root, dir, prefix, negativeRe, wrapper }
 }
 
 export function resolveOptions(userOptions: UserOptions): ResolvedOptions {
