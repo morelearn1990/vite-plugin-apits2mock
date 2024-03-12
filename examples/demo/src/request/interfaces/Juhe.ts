@@ -21,9 +21,16 @@ export default interface JuHeAPI {
         stat: string
         data: {
           uniquekey: string
+          /**
+           * @format ["张三","李四"]
+           * @pattern 1
+           */
           title: string
           date: string
           category: string
+          /**
+           * @format /\d/
+           */
           author_name: string
           url: string
           thumbnail_pic_s: string

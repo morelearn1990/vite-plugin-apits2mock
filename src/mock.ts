@@ -60,33 +60,50 @@ function objectSchema2MockTemp({ rootSchema, schema, deep }: { rootSchema: JSONS
   }, {})
 }
 
-const PRESET_STRING: Record<string, string> = {
-  name: '@name',
-  describe: '@sentence',
-  date: '@date',
-  time: '@time',
-  title: '@title',
-  id: '@uuid',
-}
-const PRESET_NUMBER: Record<string, string> = {
-  id: '@interger',
+const PRESET: Record<'string' | 'number' | 'boolean' | string, Record<'default' | string, string>> = {
+  string: {
+    default: '@string',
+    name: '@name',
+    describe: '@sentence',
+    date: '@date',
+    time: '@time',
+    title: '@title',
+    id: '@uuid',
+  },
+  number: {
+    default: '@natural',
+    id: '@interger',
+  },
+  boolean: {
+    default: '@boolean',
+  },
 }
 
 function primitiveSchema2MockTemp(rootSchema: JSONSchema7, schema: JSONSchema7, name: string = '') {
-  if (schema.type === 'string') {
-    const { format } = schema
-    return format?.replace('~', '@') ?? PRESET_STRING[name] ?? '@string'
+  const { format, type } = schema as { format?: string, type: string }
+  if (!format)
+    return PRESET[type]?.[name] ?? PRESET[type]?.default ?? '@string'
+
+  // 匹配出数字时且类型是数字，直接返回格式化的数字
+  if (type === 'number' && isNumberString(format))
+    return Number(format)
+
+  if (format.startsWith('~'))
+    return format.replace('~', '@')
+
+  const regMath = format.match(/^\/(.*)\/$/)
+  if (regMath)
+    return new RegExp(regMath[1])
+
+  const objMath = format.match(/^[\[\{](.*)[\]\}]$/)
+  if (objMath) {
+    try {
+      return JSON.parse(format)
+    }
+    catch (error) { }
   }
 
-  if (schema.type === 'number') {
-    const { format } = schema
-    return isNumberString(format || '') ? Number(format) : format?.replace('~', '@') ?? PRESET_NUMBER[name] ?? '@natural'
-  }
-
-  if (schema.type === 'boolean') {
-    const { format } = schema
-    return format?.replace('~', '@') ?? '@boolean'
-  }
+  return format
 }
 
 const NUMBER_REG = /^[+-]?(0|([1-9]\d*))(\.\d+)?$/
