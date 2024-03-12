@@ -54,8 +54,15 @@ export default function createSchemaFactory(wrapper?: Record<string, any>) {
       if (wrapperInjectProps && wrapper)
         template = mergeWrapper(wrapper, wrapperInjectProps, template)
 
-      if (/~debug/.test(api.definition.description ?? ''))
-        console.log(`===============>\nrequest: ${api.key.replace('__', ' ')} \ntemplate:  `, JSON.stringify(template, null, 1))
+      if (/~debug/.test(api.definition.description ?? '')) {
+        console.log(`===============>\nrequest: ${api.key.replace('__', ' ')} \ntemplate:  `, JSON.stringify(template, (k, v) => {
+        // 将正则对象转换为正则字符串
+          if (v instanceof RegExp)
+            return v.toString()
+
+          return v
+        }, 1))
+      }
 
       cachedAPIs.set(api.key, { ...api, mockTemplate: template })
     }
